@@ -1,6 +1,7 @@
 from Transaction import Transaction
 from Wallet import Wallet
 from TransactionPool import TransactionPool
+from Block import Block
 
 if __name__ == '__main__':
     sender = 'sender'
@@ -20,4 +21,6 @@ if __name__ == '__main__':
     if pool.transactionExists(transaction) == False:
         pool.addTransaction(transaction)
 
-    print(pool.transaction)
+    block = Block(pool.transactions, 'lastHash', 'forger', 1)
+
+    print(block.toJson())
