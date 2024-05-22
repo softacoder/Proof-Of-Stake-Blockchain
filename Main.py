@@ -12,5 +12,9 @@ if __name__ == '__main__':
     wallet = Wallet()
     signature = wallet.sign(transaction.toJson())
     
-    transaction.sign(signature)
-    print(transaction.toJson())
+    # transaction.sign(signature)
+    
+    signatureValid = Wallet.signatureValid(
+        transaction.toJson(), wallet.publicKeyString())
+
+print(signatureValid)
