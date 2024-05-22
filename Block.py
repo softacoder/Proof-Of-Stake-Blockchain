@@ -22,3 +22,11 @@ class Block():
             jsonTransactions.append(transaction.toJson())
         data['transactions'] = jsonTransactions
         return data
+    
+    def payload(self):
+        jsonRepresentation = copy.deepcopy(self.toJson())
+        jsonRepresentation['signature'] = ''
+        return jsonRepresentation
+
+    def sign(self, signature):
+        self.signature = signature
