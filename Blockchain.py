@@ -42,6 +42,8 @@ def getCoveredTransactionSet(self, transactions):
         return coveredTransactions
 
         def transactionCovered(self, transaction):
+            if transaction.type == 'EXCHANGE':
+                return True
             senderBalance = self.accountModel.getBalance(
                 transaction.senderPublicKey)
             if senderBalance >= transaction.amount:
