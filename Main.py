@@ -25,8 +25,9 @@ if __name__ == '__main__':
     coveredTransaction = blockchain.getCoveredTransactionSet(pool.transactions)
     lastHash = BlockchainUtils.hash(blockchain.blocks[-1].payload()).hexdigest()
     blockCount = blockchain.blocks[-1].blockCount + 1
-    blockOne = Block(coveredTransaction, lastHash, forger.publicKeyString(), blockCount)
+    blockOne = forger.createBlock(coveredTransaction, lastHash, blockCount)
     blockchain.addBlock(blockOne)
+    pool.removeFromPool(blockOne.transactions)
 
     #alice wants to spend 5 tokens to bob
     transaction = alice.createTransaction(bob.publicKeySTring(), 5, 'TRANSFER')
@@ -37,7 +38,8 @@ if __name__ == '__main__':
     coveredTransaction = blockchain.getCoveredTransactionSet(pool.transactions)
     lastHash = BlockchainUtils.hash(blockchain.blocks[-1].payload()).hexdigest()
     blockCount = blockchain.blocks[-1].blockCount + 1
-    blockTwo = Block(coveredTransaction, lastHash, forger.publicKeyString(), blockCount)
+    blockTwo = forger.createBlock(coveredTransaction, lastHash, blockCount)
     blockchain.addBlock(blockTwo)
+    pool.removeFromPool(blockTwo.transactions)
 
     pprint.pprint(blockchain.toJson())
