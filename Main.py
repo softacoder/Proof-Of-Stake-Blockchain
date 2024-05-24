@@ -16,8 +16,9 @@ if __name__ == '__main__':
 
    node = Node(ip, port)
    node.startP2P()
+   node.startAPI()
 
-   if port == 10002:
-      node.p2p.connect_with_node('localhost', 10001)
+   # if port == 10002:
+   #    node.p2p.connect_with_node('localhost', 10001)
    
    
