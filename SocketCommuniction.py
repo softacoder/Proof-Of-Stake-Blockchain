@@ -4,6 +4,7 @@ from SocketConnector import SocketConnector
 from BlockchainUtils import BlockchainUtils
 import json
 
+
 class SocketCommunication(Node):
 
     def __init__(self, ip, port):
@@ -12,7 +13,7 @@ class SocketCommunication(Node):
         self.peerDiscoveryHandler = PeerDiscoveryHandler(self)
         self.socketConnector = SocketConnector(ip, port)
 
-    def connectedToFirstNode(self):
+    def connectToFirstNode(self):
         if self.socketConnector.port != 10001:
             self.connect_with_node('localhost', 10001)
 
@@ -35,9 +36,11 @@ class SocketCommunication(Node):
         elif message.messageType == 'TRANSACTION':
             transaction = message.data
             self.node.handleTransaction(transaction)
+        elif message.messageType == 'BLOCK':
+            block = message.data
+            self.node.handleBlock(block)
 
-
-    def send(self,receiver, message):
+    def send(self, receiver, message):
         self.send_to_node(receiver, message)
 
     def broadcast(self, message):
