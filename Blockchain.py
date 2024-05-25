@@ -59,11 +59,20 @@ def getCoveredTransactionSet(self, transactions):
                 self.executeTransaction(transaction)
 
         def executeTransaction(self, transaction):
-            sender = transaction.senderPublicKey
-            receiver = transaction.receiverPublicKey
-            amount = transaction.amount
-            self.accountModel.updateBalance(sender, -amount)
-            self.accountModel.updateBalance(receiver, amount)
+            if transaction.type == 'STAKE':
+                sender = transaction.senderPublicKey
+                receiver = transaction.receiverPublicKey
+                if sender == receiver:
+                    amount = transaction.amount
+                    self.pos.update(sender, amount)
+                    self.accountModel.updateBalance(sender, amount)
+                    self.accountModel.updateBalance(receiver, -amount)
+            else:
+                sender = transaction.senderPublicKey
+                receiver = transaction.receiverPublicKey
+                amount = transaction.amount
+                self.accountModel.updateBalance(sender, -amount)
+                self.accountModel.updateBalance(receiver, amount)
 
         def nextForger(self):
             lastBlockHash = BlockchainUtils.hash(
