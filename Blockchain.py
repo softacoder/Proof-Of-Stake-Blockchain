@@ -98,7 +98,7 @@ class Blockchain():
         return False
 
     def forgerValid(self, block):
-        forgerPublicKey = self.pos.forger(block.lastHash)
+        forgerPublicKey = self.pos.forger(block.lastBlockHash)
         proposedBlockForger = block.forger
         if forgerPublicKey == proposedBlockForger:
             return True
